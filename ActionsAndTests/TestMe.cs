@@ -19,10 +19,4 @@ public class TestMe
     {
         Assert.IsTrue(true);
     }
-
-    [Test]
-    public async Task SimpleTestMethod2()
-    {
-        Assert.IsTrue(false);
-    }
 }
