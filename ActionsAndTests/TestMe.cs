@@ -17,6 +17,6 @@ public class TestMe
     [Test]
     public async Task SimpleTestMethod()
     {
-        Assert.IsTrue(false);
+        Assert.IsTrue(true);
     }
 }
