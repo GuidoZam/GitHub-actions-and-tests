@@ -1,8 +1,6 @@
 # Use GitHub Actions with your test project
 
-Result: ![tests workflow](https://github.com/GuidoZam/GitHub-actions-and-tests/actions/workflows/main.yml/badge.svg)
-
-[![dotnet package](https://github.com/GuidoZam/GitHub-actions-and-tests/actions/workflows/testAction.yml/badge.svg)](https://github.com/GuidoZam/GitHub-actions-and-tests/actions/workflows/testAction.yml)
+Result: ![tests workflow](https://github.com/GuidoZam/GitHub-actions-and-tests/actions/workflows/testAction.yml/badge.svg)
 
 To add a badge to the readme file use the following code:
 
