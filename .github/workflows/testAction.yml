@@ -1,43 +1,24 @@
-name: Test the tests!
+name: dotnet package
 
-on:
-  push:
-    branches: [ main ]
-    paths: [ 'ActionsAndTests/**' ]
-  workflow_dispatch:
+on: [push]
 
-env:
-  NET_VERSION: '6.x'
-  TEST_PROJECT_PATH: ActionsAndTests/
-  TEST_PROJECT_BUILD_PATH: ActionsAndTests/tests
-  TEST_PROJECT_NAME: ActionsAndTests
-  
 jobs:
-  my_action_job:
-    name: Test the tests!
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
+  build:
 
-      - name: Setup .NET SDK ${{ env.NET_VERSION }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '6.0.x' ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ env.NET_VERSION }}
-          dotnet-quality: 'ga'
-
-      - name: 'Resolve Project Dependencies Using Dotnet'
-        shell: pwsh
-        run: |
-          pushd './${{ env.TEST_PROJECT_PATH }}'
-          dotnet build --output ./{{ env.TEST_PROJECT_BUILD_PATH }}
-          popd
-
-      - name: Run tests
-        uses: microsoft-approved-actions/vstest@master
-        with:
-          testAssembly: ${{ env.TEST_PROJECT_NAME }}*.dll
-          searchFolder: ./${{ env.TEST_PROJECT_PATH }}
-          runInParallel: true
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
