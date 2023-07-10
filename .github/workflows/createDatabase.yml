@@ -25,4 +25,4 @@ jobs:
           path: "customSQLCommand.sql"
 
       - name: Execute custom sql command
-        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q ${{ steps.sql_command.outputs.contents }}
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "${{ steps.sql_command.outputs.contents }}"
