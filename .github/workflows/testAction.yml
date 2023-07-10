@@ -16,6 +16,12 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Change env to tests
+        uses: "DamianReeves/write-file-action@master"
+        with:
+          path: ./ActionsAndTests/env.txt
+          write-mode: overwrite
+          contents: tests
       - name: Install dependencies
         run: dotnet restore ./ActionsAndTests/ActionsAndTests.sln
       - name: Build
