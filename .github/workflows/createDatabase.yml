@@ -1,8 +1,10 @@
+name: Test sql in actions
+
 on: [push]
 
 jobs:
-  test-everywhere:
-    name: Test Action on all platforms
+  test-sql:
+    name: Test sql in actions
     runs-on: ubuntu-latest
 
     steps:
@@ -12,9 +14,18 @@ jobs:
         uses: potatoqualitee/mssqlsuite@v1.7
         with:
           install: sqlengine, sqlpackage, localdb
-
-      - name: Run sqlclient
-        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
         
       - name: Test sql action
         run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "CREATE DATABASE test_db"
+        
+      - name: Read sql command file
+        id: sql_command
+        uses: andstor/file-reader-action@v1
+        with:
+          path: "customSQLCommand.sql"
+      
+      - name: File content
+        run: echo "${ steps.sql_command.outputs.contents }"
+
+      - name: Execute custom sql command
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "${ steps.sql_command.outputs.contents }"
