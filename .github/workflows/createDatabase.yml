@@ -17,4 +17,4 @@ jobs:
         run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
         
       - name: Test sql action
-        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "CREATE DATABASE test-db"
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "CREATE DATABASE test_db"
