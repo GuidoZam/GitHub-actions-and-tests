@@ -23,9 +23,6 @@ jobs:
         uses: andstor/file-reader-action@v1
         with:
           path: "customSQLCommand.sql"
-      
-      - name: File content
-        run: echo ${{ steps.sql_command.outputs.contents }}
 
       - name: Execute custom sql command
-        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "${ steps.sql_command.outputs.contents }"
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q ${{ steps.sql_command.outputs.contents }}
