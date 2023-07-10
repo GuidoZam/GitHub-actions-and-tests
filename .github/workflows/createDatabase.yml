@@ -17,7 +17,10 @@ jobs:
         
       - name: Test sql action
         run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "CREATE DATABASE test_db"
-        
+      
+      - name: Execute custom sql command
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SET ANSI_NULLS, QUOTED_IDENTIFIER ON"
+      
       - name: Read sql command file
         id: sql_command
         uses: andstor/file-reader-action@v1
